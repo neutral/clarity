@@ -1,18 +1,35 @@
 # Clarity Labels
 
-All content in project docs needs to be labeled with one of the following ones in the list below. They categorize sentences,
-bullets, or paragraphs so intent is clear, scannable, and consistent across docs. If an appropriate label is not found in this list, flag it and exit work.
+Labels categorize sentences, bullets, or paragraphs so intent is clear, scannable,
+and consistent across the project wiki.
+
+Operational default: use section-default inference so pages stay readable. In
+early drafts, focus on labeling sections that matter; in stable/decision-ready
+pages, every substantive statement should be labelable by this taxonomy.
+
+If no label fits, flag it (don’t invent new labels inline), use the closest label
+temporarily, and propose a taxonomy change in the report.
+
+## Core label set (mandatory default for most passes)
+
+For most passes, use this set by default:
+
+- Fact, Assumption, Question, Definition
+- Goal, Non-Goal, Scope, Constraint
+- Decision, Rationale, Tradeoff
+- Requirement, Acceptance Criterion
+- Risk, Mitigation
 
 ## Applying labels
 
-Prefer inference so docs read naturally. Use this cascade:
+Prefer inference so pages read naturally. Use this cascade:
 
-1. Document defaults (optional).
+1. Page defaults (optional).
 2. Section defaults (preferred).
 3. Block overrides for short exceptions.
-4. Inline labels only when mixed.
+4. If labels still mix, split into sub-sections (do not use inline labels in normal passes).
 
-Document defaults (optional):
+Page defaults (optional):
 
 ```
 Label defaults:
@@ -24,13 +41,26 @@ Label defaults:
 
 Section defaults (preferred): `## Goals (Goal)` / `## Risks [Risk]`
 Block override: `### Assumptions (Assumption)` or `<!-- Label: Assumption -->`
-Inline labels (exceptions): `- Risk: ...` / `- Assumption: ...`
+Inline labels: avoid in normal passes; if unavoidable, treat as temporary and
+convert to section defaults or block overrides in the same pass.
 
 Inference rules:
 
 - Heading label or label map sets the default for the section.
 - Statements inherit the section label unless overridden.
-- If labels mix, split the section or label each bullet.
+- If labels mix, split the section or add a block override; avoid per-bullet inline labels.
+
+## Domain label profiles (optional activation)
+
+Keep the full taxonomy as a superset. Activate only the subset needed for the
+current pass:
+
+- Product profile: Goal, Non-Goal, Scope, Requirement, Acceptance Criterion,
+  Decision, Rationale, Tradeoff.
+- Research profile: Assumption, Hypothesis, Research Question, Method,
+  Observation, Finding, Insight, Evidence.
+- Risk/operations profile: Risk, Mitigation, Dependency, Quality Attribute,
+  Constraint, Issue.
 
 ## Labels
 
@@ -50,7 +80,7 @@ Avoid: Long-term documentation without a validation approach.
 
 #### Definition
 
-Definition: The precise meaning of a term used in the docs.
+Definition: The precise meaning of a term used in the project wiki.
 Use: Glossary entries and term disambiguation; keep in a glossary-style section.
 Avoid: Explaining behavior; keep it semantic.
 
@@ -58,7 +88,7 @@ Avoid: Explaining behavior; keep it semantic.
 
 Definition: A guiding rule that shapes decisions.
 Use: Design intent and tradeoff framing.
-Avoid: Specific implementation steps.
+Avoid: Specific implementation actions.
 
 #### Decision
 
@@ -100,7 +130,7 @@ Avoid: Adding new requirements via examples.
 
 #### Goal
 
-Definition: A desired outcome the docs support.
+Definition: A desired outcome the project supports.
 Use: Direction and intended impact; keep explicit and separate from Non-Goals.
 Avoid: Detailed requirements.
 
@@ -156,7 +186,7 @@ Avoid: Feature behaviors.
 
 Definition: An external requirement or upstream input.
 Use: External services, teams, or data sources.
-Avoid: Internal steps that are not dependencies.
+Avoid: Internal actions that are not dependencies.
 
 #### Risk
 
@@ -167,7 +197,7 @@ Avoid: Generic concerns without triggers.
 #### Mitigation
 
 Definition: An action or control that reduces a risk.
-Use: Concrete steps tied to a specific risk.
+Use: Concrete actions tied to a specific risk.
 Avoid: Vague intentions.
 
 #### Issue
@@ -230,7 +260,7 @@ Avoid: Irrelevant industry trivia.
 
 #### Audience
 
-Definition: The intended readers or consumers of the doc or feature.
+Definition: The intended readers or consumers of the page/section or feature.
 Use: Tailor tone and detail.
 Avoid: Broad, vague targets.
 
@@ -298,13 +328,13 @@ Avoid: Detailed UI documentation.
 
 Definition: A phase in the end-to-end user journey.
 Use: Organize research and experience gaps.
-Avoid: Product-only steps.
+Avoid: Product-only actions.
 
 #### Workflow
 
-Definition: The ordered set of steps to achieve an outcome.
+Definition: The ordered set of actions to achieve an outcome.
 Use: Process mapping and system behavior.
-Avoid: High-level goals without steps.
+Avoid: High-level goals without actions.
 
 #### Edge Case
 
@@ -359,7 +389,7 @@ Avoid: Unsubstantiated opinions.
 #### Recommendation
 
 Definition: A proposed action derived from evidence or insight.
-Use: Next steps and prioritization.
+Use: Next actions and prioritization.
 Avoid: Undeclared decisions.
 
 #### Evidence

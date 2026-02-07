@@ -1,7 +1,7 @@
 # Clarity Setup
 
 Use this repo as the canonical source for Clarity. Copy the contents of
-`methodology/` into `.clarity/` in project planning repos and reference it
+`methodology/` into `.clarity/` in project wiki repos and reference it
 from `AGENTS.md`.
 
 ## Folder setup
@@ -26,13 +26,12 @@ Add this section to the target repo `AGENTS.md`:
 
 ```
 ## Clarity
-- Purpose: improve project planning docs with progressive clarity passes.
-- Location: `.clarity/` holds the Clarity artifacts; start at `.clarity/CLARITY.md`.
-- Intake: complete `.clarity/INTAKE.md`.
-- Apply: choose a flow from `.clarity/FLOW.md` and follow `.clarity/LOOP.md`.
-- Labels: use `.clarity/LABELS.md` to tag statements and add missing definitions.
-- Log: report each pass using `.clarity/templates/clarity-run.md`.
-- Framework changes: update Clarity in the canonical repo and copy it into the target repo; do not apply Clarity to Clarity itself.
+- Use Clarity for doc work: start with `.clarity/WORKFLOW.md`.
+- Select a preset from `.clarity/presets/overview.md` (or propose a custom preset for approval if none fits).
+- Keep `.clarity/workflow/plan.md`, `.clarity/workflow/report.md`, `.clarity/workflow/canonical-sources.md`, and `.clarity/workflow/decision-ledger.md` updated.
+- Write one receipt per applied action under `.clarity/workflow/receipts/`.
+- Classify substantive edits (`cosmetic` / `structural` / `semantic` / `decision-impacting`) and require explicit approval records for `semantic` / `decision-impacting` changes.
+- Guardrails: stay within scope (bounded link/terminology fixes are OK); remove outdated info rather than leaving disclaimers; do not mention personas/meta-role narration in outputs.
 ```
 
 ## Updating Clarity in a target repo
