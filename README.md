@@ -11,30 +11,34 @@ updates feel guided instead of ad hoc.
 
 ## This Repo
 
-- `methodology/` contains the Clarity artifacts (CLARITY, presets, labels, actions).
+- `methodology/` contains the frozen Clarity core artifacts (CLARITY, WORKFLOW, LABELS, templates).
+- `library/` contains the initial Clarity library (presets, actions, personas).
 - `setup/` contains setup instructions for installing Clarity in a target repo.
-- `scripts/` contains a helper to copy the methodology into `.clarity/`.
+- `scripts/` contains a helper to copy methodology + library into `.methodologies/clarity/`.
 
 ## Quickstart (Use in a Target Repo)
 
-1. Copy the methodology into the target repo as `.clarity/`:
+1. Copy methodology + library into the target repo under `.methodologies/clarity/`:
    `scripts/copy-clarity.sh /path/to/target-repo`
 2. Add the Clarity section to the target repo `AGENTS.md`:
    See `setup/clarity-setup.md`.
-3. Kickstart a pass run by prompting an agent with scope + intent, and tell it to follow `.clarity/WORKFLOW.md`:
+3. Set `.methodologies/clarity/status.md` **Permissions** (`read and write allowed` / `read-only` / `no access`) for your repo boundaries.
+4. Kickstart a pass run by prompting an agent with scope + intent, and tell it to follow `.methodologies/clarity/methodology/WORKFLOW.md`:
 
-The agent should select a preset from `.clarity/presets/overview.md`, create/update
-`.clarity/workflow/plan.md`, initialize
-`.clarity/workflow/canonical-sources.md`,
-`.clarity/workflow/decision-ledger.md`, and
-`.clarity/workflow/receipts/`, then execute → audit → polish → report.
+The agent should select a preset from
+`.methodologies/clarity/library/presets/overview.md`, create/update
+`.methodologies/clarity/scratch/plan.md`, initialize
+`.methodologies/clarity/scratch/canonical-sources.md`,
+`.methodologies/clarity/scratch/decision-ledger.md`, and
+`.methodologies/clarity/scratch/receipts/`, then execute → audit → polish →
+report.
 
 ## Method Flow (High Level -> Detail)
 
 1. `methodology/CLARITY.md`: purpose, system model, and control knobs.
 2. `methodology/WORKFLOW.md`: run sequence and compliance gates.
-3. `methodology/presets/overview.md`: outcome playbooks.
-4. `methodology/actions/index.md`: tactical action library.
+3. `library/presets/overview.md`: outcome playbooks.
+4. `library/actions/index.md`: tactical action library.
 5. `methodology/LABELS.md`: semantic labeling model.
 
 ## Use in another repo

@@ -18,8 +18,8 @@ Use this reading order to understand Clarity quickly:
 
 1. `CLARITY.md` (this file): model, principles, control knobs, and outcomes.
 2. `WORKFLOW.md`: execution timeline (intake -> plan -> execute -> audit -> polish -> report).
-3. `presets/overview.md`: outcome-specific playbooks (which actions/personas/checks to use).
-4. `actions/index.md` + action files: tactical units and class-specific behavior.
+3. `../library/presets/overview.md`: outcome-specific playbooks (which actions/personas/checks to use).
+4. `../library/actions/index.md` + action files: tactical units and class-specific behavior.
 5. `LABELS.md`: semantic consistency model (section-default inference + taxonomy).
 6. `templates/`: runtime artifacts for planning, compliance, and reporting.
 
@@ -32,11 +32,13 @@ Clarity is designed for wiki updates where many agents can otherwise drift. Each
 layer is a control knob that removes a specific source of variance:
 
 - Scope knob (`plan.md`): limits where edits can occur so passes stay reviewable.
-- Preset knob (`presets/overview.md`): maps outcome intent to a known action/check set.
-- Persona knob (`personas/`): controls failure modes and required questions, not writing style.
-- Action knob (`actions/`): applies repeatable tactics with deterministic/structural/editorial strategies.
+- Preset knob (`../library/presets/overview.md`): maps outcome intent to a known action/check set.
+- Persona knob (`../library/personas/`): controls failure modes and required questions, not writing style.
+- Action knob (`../library/actions/`): applies repeatable tactics with deterministic/structural/editorial strategies.
 - Label knob (`LABELS.md`): makes intent explicit without clutter through section-default inference.
 - Compliance knobs (`plan.md` controls): scope-drift budget, change classes, approval gates, and receipts.
+- Permissions knob (`.methodologies/clarity/status.md`): defines path-level
+  read/write boundaries (`read and write allowed`, `read-only`, `no access`).
 - Audit knob (`WORKFLOW.md` + presets): enforces both content quality and process compliance before finalization.
 
 Together these knobs make updates safer and faster: less rework, clearer handoffs,
@@ -96,7 +98,7 @@ open-ended.
 - Wiki page: A single page in the project wiki (typically a Markdown file).
 - Dimension: The aspect of the project you’re deepening in a pass (e.g., decisions, requirements, risk).
 - Scope: The slice of the wiki in focus for a pass (paths/headings/labels), plus any bounded second-order fixes needed to keep the wiki consistent (e.g., link updates, terminology alignment).
-- Preset (clarity preset): An outcome-focused preset from `presets/overview.md` (or a custom preset) that maps to actions.
+- Preset (clarity preset): An outcome-focused preset from `../library/presets/overview.md` (or a custom preset) that maps to actions.
 - Pass run (clarity pass run): Applying a preset to a scope using `WORKFLOW.md`.
 
 ## Personas
@@ -119,17 +121,17 @@ Personas are control points, not style tags. For each selected persona, define:
 
 Advantage: this turns persona choice into an explicit quality + governance + auditability control mechanism, not a writing preference.
 
-Personas live under `personas/`. Prefer recording the persona IDs in the plan
+Personas live under `../library/personas/`. Prefer recording the persona IDs in the plan
 and report.
 
 Persona selection default: use the personas defined on the selected preset in
-`presets/overview.md` (override only when explicitly needed).
+`../library/presets/overview.md` (override only when explicitly needed).
 
 Default polish persona: `technical-editor`.
 
 ## At a glance
 
-A preset is an outcome-focused configuration (stored in `presets/overview.md`) that maps
+A preset is an outcome-focused configuration (stored in `../library/presets/overview.md`) that maps
 to a set of actions. A pass run applies that preset to a scope.
 
 Typical run outline:
@@ -138,20 +140,22 @@ Typical run outline:
 ### Run a pass (10 minutes to start)
 
 1. Follow `WORKFLOW.md` (intake loop → scan → plan → execute → audit → polish → report).
-2. Create or update `.clarity/workflow/plan.md` from `templates/plan.md` when scoping begins.
-   Also initialize `.clarity/workflow/canonical-sources.md`, `.clarity/workflow/decision-ledger.md`, and `.clarity/workflow/receipts/` from templates.
-3. Define a scope (pages/paths, headings, labels) and keep it small and repeatable.
-4. Preset selection (agent): choose the best-fit preset from `presets/overview.md` and record its personas, action plan, deliverables, and checks (or propose a custom preset for approval).
-5. Apply the mapped actions to the scoped pages/areas.
-6. Audit using the general checks, selected preset checks, and process-compliance checks; resolve failures.
-7. Polish for scanability and consistency (cosmetic/editorial only after audit).
-8. Generate the report using `templates/report.md`.
+2. Confirm `.methodologies/clarity/status.md` **Permissions** and keep scope
+   and edits within the allowed paths.
+3. Create or update `.methodologies/clarity/scratch/plan.md` from `templates/plan.md` when scoping begins.
+   Also initialize `.methodologies/clarity/scratch/canonical-sources.md`, `.methodologies/clarity/scratch/decision-ledger.md`, and `.methodologies/clarity/scratch/receipts/` from templates.
+4. Define a scope (pages/paths, headings, labels) and keep it small and repeatable.
+5. Preset selection (agent): choose the best-fit preset from `../library/presets/overview.md` and record its personas, action plan, deliverables, and checks (or propose a custom preset for approval).
+6. Apply the mapped actions to the scoped pages/areas.
+7. Audit using the general checks, selected preset checks, and process-compliance checks; resolve failures.
+8. Polish for scanability and consistency (cosmetic/editorial only after audit).
+9. Generate the report using `templates/report.md`.
 
 Presets map intended outcomes to actions.
 
 ### Common outcomes → preset
 
-Agent heuristic: match the intended outcome to the closest preset in `presets/overview.md`.
+Agent heuristic: match the intended outcome to the closest preset in `../library/presets/overview.md`.
 
 Use preset classes to narrow selection quickly:
 
@@ -185,7 +189,7 @@ Use preset classes to narrow selection quickly:
 
 ### Or propose a custom preset (no library preset fits)
 
-If no preset in `presets/overview.md` fits, select actions from `actions/index.md` and propose
+If no preset in `../library/presets/overview.md` fits, select actions from `../library/actions/index.md` and propose
 a custom preset (name + personas + core/conditional actions + deliverables + checks) for approval before applying changes.
 
 One way to compose a custom preset is to pick a dimension and start from these actions:
@@ -209,6 +213,7 @@ intent:
 ### “Done” for a pass run
 
 - Changes are limited to scope (plus any bounded second-order fixes needed to keep references consistent).
+- All changes respect `.methodologies/clarity/status.md` permissions.
 - Open questions are captured.
 - The report explains what changed and why.
 
@@ -241,19 +246,21 @@ Examples:
 
 ## Artifacts
 
-- `presets/overview.md`: preset library overview (global rules + preset list).
-- `presets/*.md`: individual preset definitions.
+- `../library/presets/overview.md`: preset library overview (global rules + preset list).
+- `../library/presets/*.md`: individual preset definitions.
 - `LABELS.md`: clarity labels for statements in the wiki.
-- `actions/index.md`: action library used by presets.
-- `actions/`: action category folders (see `actions/index.md`).
-- `actions/scripts/` (optional): shared action scripts when present.
+- `../library/actions/index.md`: action library used by presets.
+- `../library/actions/`: action category folders (see `../library/actions/index.md`).
+- `../library/actions/scripts/` (optional): shared action scripts when present.
 - `WORKFLOW.md`: agent workflow (intake loop → scan → plan → execute → audit → polish → report).
-- `templates/plan.md`: plan template used to create `.clarity/workflow/plan.md`.
-- `templates/report.md`: report template used to create `.clarity/workflow/report.md`.
+- `templates/plan.md`: plan template used to create `.methodologies/clarity/scratch/plan.md`.
+- `templates/report.md`: report template used to create `.methodologies/clarity/scratch/report.md`.
 - `templates/canonical-sources.md`: canonical source register template.
 - `templates/decision-ledger.md`: locked/open decision ledger template.
 - `templates/receipt.md`: per-action receipt template.
-- `.clarity/workflow/`: runtime folder in target repos containing the per-branch `plan.md`, `report.md`, `canonical-sources.md`, `decision-ledger.md`, and `receipts/` (not required in this methodology repo unless you are running a pass against this repo itself).
+- `.methodologies/clarity/status.md`: target-repo status file for source paths and
+  path permissions (`read and write allowed` / `read-only` / `no access`).
+- `.methodologies/clarity/scratch/`: runtime folder in target repos containing the per-branch `plan.md`, `report.md`, `canonical-sources.md`, `decision-ledger.md`, and `receipts/` (not required in this methodology repo unless you are running a pass against this repo itself).
 
 ## Label application
 

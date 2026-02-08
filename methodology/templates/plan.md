@@ -23,9 +23,13 @@ Scope-drift budget (max out-of-scope mechanical changes + unit):
 Change classification policy (`cosmetic` / `structural` / `semantic` / `decision-impacting`):
 Approval policy for `semantic` / `decision-impacting` changes:
 Action receipts required? (recommended: yes):
-Canonical source register path (default `.clarity/workflow/canonical-sources.md`):
-Locked/open ledger path (default `.clarity/workflow/decision-ledger.md`):
-Receipts path (default `.clarity/workflow/receipts/`):
+Permissions status path (default `.methodologies/clarity/status.md`):
+Read and write allowed paths (from status):
+Read-only paths (from status):
+No access paths (from status):
+Canonical source register path (default `.methodologies/clarity/scratch/canonical-sources.md`):
+Locked/open ledger path (default `.methodologies/clarity/scratch/decision-ledger.md`):
+Receipts path (default `.methodologies/clarity/scratch/receipts/`):
 
 ## Intent
 
@@ -92,7 +96,7 @@ Hotspots (overlap, drift, missing sections, weak definitions):
 ## Plan
 
 Preset selected:
-Preset source (`presets/overview.md` or custom):
+Preset source (`../library/presets/overview.md` or custom):
 Core actions (from preset; minimum set):
 - <action-id>
 
@@ -103,9 +107,9 @@ Added actions (via expansion rule; record why):
 - Added action: <action-id>; Trigger: <what you observed>; Artifact: <what it produces>
 
 Audit bar (checks):
-- General checks (all pass runs; from `presets/overview.md`):
-- Preset checks (selected preset; from `presets/overview.md`):
-- Process-compliance checks (all pass runs; from `presets/overview.md`):
+- General checks (all pass runs; from `../library/presets/overview.md`):
+- Preset checks (selected preset; from `../library/presets/overview.md`):
+- Process-compliance checks (all pass runs; from `../library/presets/overview.md`):
 - Additional checks (optional):
 
 Audit bar (writing principles, optional):
@@ -124,11 +128,12 @@ Audit bar (writing principles, optional):
 
 ## Action receipts (rolling)
 
-- <action-id> -> `.clarity/workflow/receipts/<receipt-file>.md`
+- <action-id> -> `.methodologies/clarity/scratch/receipts/<receipt-file>.md`
 
 ## Compliance status (rolling)
 
 - Scope-drift used / budget:
+- Permissions compliance status (reads/writes vs status permissions):
 - Approval records for `semantic` / `decision-impacting` changes:
 - Canonical source register updated:
 - Locked/open ledger updated:

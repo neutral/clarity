@@ -7,8 +7,8 @@ and aligning all scoped pages to it.
 
 Inputs:
 - Scope (paths/headings/labels)
-- Canonical source register (`.clarity/workflow/canonical-sources.md` when available)
-- Locked/open decisions (`.clarity/workflow/decision-ledger.md` when relevant)
+- Canonical source register (`.methodologies/clarity/scratch/canonical-sources.md` when available)
+- Locked/open decisions (`.methodologies/clarity/scratch/decision-ledger.md` when relevant)
 
 Preconditions:
 - Scope and exclusions are explicit.

@@ -108,10 +108,10 @@ Always include:
 - Fixed decisions: do not contradict locked decisions; if conflicts appear, return to intake to confirm canonical sources.
 - Change classification gate: substantive edits are classified as `cosmetic`, `structural`, `semantic`, or `decision-impacting`.
 - Approval gate: `semantic` / `decision-impacting` edits include explicit owner approval records.
-- Receipt completeness: one action receipt exists per applied action under `.clarity/workflow/receipts/`.
+- Receipt completeness: one action receipt exists per applied action under `.methodologies/clarity/scratch/receipts/`.
 - Scope-drift budget gate: out-of-scope mechanical changes stay within the approved budget; otherwise audit fails until intake is revisited and approved.
-- Canonical source register hygiene: `.clarity/workflow/canonical-sources.md` is updated when source authority changes.
-- Locked/open ledger hygiene: `.clarity/workflow/decision-ledger.md` is updated when decision posture changes.
+- Canonical source register hygiene: `.methodologies/clarity/scratch/canonical-sources.md` is updated when source authority changes.
+- Locked/open ledger hygiene: `.methodologies/clarity/scratch/decision-ledger.md` is updated when decision posture changes.
 
 ## Preset library
 

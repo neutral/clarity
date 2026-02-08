@@ -8,8 +8,8 @@ required documentation surfaces in scope.
 Inputs:
 - Scope (paths/headings/labels)
 - Change set to propagate (policy/rule/term/decision updates)
-- Canonical source register (`.clarity/workflow/canonical-sources.md` when available)
-- Locked/open decision ledger (`.clarity/workflow/decision-ledger.md` when relevant)
+- Canonical source register (`.methodologies/clarity/scratch/canonical-sources.md` when available)
+- Locked/open decision ledger (`.methodologies/clarity/scratch/decision-ledger.md` when relevant)
 
 Preconditions:
 - The change set is explicit (what changed, why, and source of truth).

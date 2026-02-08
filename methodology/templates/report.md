@@ -19,6 +19,10 @@ Scope-drift budget (approved):
 Change classification policy (`cosmetic` / `structural` / `semantic` / `decision-impacting`):
 Approval policy for `semantic` / `decision-impacting` changes:
 Action receipts required?:
+Permissions status path:
+Read and write allowed paths (from status):
+Read-only paths (from status):
+No access paths (from status):
 Canonical source register path:
 Locked/open ledger path:
 Receipts path:
@@ -80,7 +84,7 @@ Persona-based checks run:
 ## Preset + Audit
 
 Preset used:
-Preset source (`presets/overview.md` or custom):
+Preset source (`../library/presets/overview.md` or custom):
 Core actions applied:
 - <action-id>
 
@@ -91,9 +95,9 @@ Added actions applied (via expansion rule):
 - Added action: <action-id>; Trigger: <what you observed>; Artifact: <what it produced>
 
 Audit bar (checks):
-- General checks (all pass runs; from `presets/overview.md`):
-- Preset checks (selected preset; from `presets/overview.md`):
-- Process-compliance checks (all pass runs; from `presets/overview.md`):
+- General checks (all pass runs; from `../library/presets/overview.md`):
+- Preset checks (selected preset; from `../library/presets/overview.md`):
+- Process-compliance checks (all pass runs; from `../library/presets/overview.md`):
 - Additional checks (optional):
 
 Audit bar (writing principles, optional):
@@ -108,6 +112,7 @@ Audit bar (writing principles, optional):
 - Change classification count - decision-impacting:
 - Approval records for `semantic` / `decision-impacting` changes:
 - Scope-drift used / budget:
+- Permissions compliance status (reads/writes vs status permissions):
 - Action receipts generated:
 - Canonical source register updated:
 - Locked/open ledger updated:

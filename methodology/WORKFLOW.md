@@ -6,16 +6,20 @@ a project wiki.
 Key idea: run an **intake loop** until the agent can restate the user’s intent
 unambiguously; only then move on to scan/plan/execute.
 
-When scoping begins in a target project wiki, create `.clarity/workflow/` (if missing) and initialize:
+When scoping begins in a target project wiki, create `.methodologies/clarity/scratch/` (if missing) and initialize:
 
-- `.clarity/workflow/plan.md` from `templates/plan.md`
-- `.clarity/workflow/canonical-sources.md` from `templates/canonical-sources.md`
-- `.clarity/workflow/decision-ledger.md` from `templates/decision-ledger.md`
-- `.clarity/workflow/receipts/` for per-action receipts (using `templates/receipt.md`)
+- `.methodologies/clarity/scratch/plan.md` from `templates/plan.md`
+- `.methodologies/clarity/scratch/canonical-sources.md` from `templates/canonical-sources.md`
+- `.methodologies/clarity/scratch/decision-ledger.md` from `templates/decision-ledger.md`
+- `.methodologies/clarity/scratch/receipts/` for per-action receipts (using `templates/receipt.md`)
 
 Keep these files updated as shared execution artifacts. The owner and agent both
 update them as the pass progresses. Each branch should have a single active
-`plan.md` in `.clarity/workflow/`.
+`plan.md` in `.methodologies/clarity/scratch/`.
+
+Before intake, read `.methodologies/clarity/status.md` and treat the
+**Permissions** section (`read and write allowed`, `read-only`, `no access`) as
+hard path boundaries for the run.
 
 ## Why this sequence works
 
@@ -39,7 +43,7 @@ drift, and more effort improving wiki quality.
 Collect the minimum inputs needed to run a pass. If any required input is
 missing or ambiguous, ask follow-ups and do not proceed.
 
-Initialize `.clarity/workflow/plan.md` (from `templates/plan.md`) and record
+Initialize `.methodologies/clarity/scratch/plan.md` (from `templates/plan.md`) and record
 answers under **Intent** and **Intake log**.
 
 Note (Why We Plan / “Thinking Budget”): The plan is not paperwork; it is a
@@ -61,7 +65,8 @@ Required:
 4. Confusions: what feels unclear, risky, or easiest to misinterpret today?
 5. Terminology: which terms are overloaded or frequently misunderstood?
 6. Goals + non-goals: what are the explicit goals and non-goals?
-7. Compliance controls: what scope-drift budget applies, how changes are classified (`cosmetic` / `structural` / `semantic` / `decision-impacting`), whether action receipts are mandatory (recommended: yes), and what approval policy applies to `semantic` / `decision-impacting` edits?
+7. Permissions: what are the effective path boundaries from `.methodologies/clarity/status.md` (`read and write allowed`, `read-only`, `no access`), and does scope fit these boundaries?
+8. Compliance controls: what scope-drift budget applies, how changes are classified (`cosmetic` / `structural` / `semantic` / `decision-impacting`), whether action receipts are mandatory (recommended: yes), and what approval policy applies to `semantic` / `decision-impacting` edits?
 
 Optional (ask when it will affect decisions during the pass):
 
@@ -70,7 +75,7 @@ Optional (ask when it will affect decisions during the pass):
 3. Style constraints: tone/format/length constraints?
 4. “Done” definition: what does done look like for this pass?
 5. Deadlines/dependencies: anything shaping scope or sequencing?
-6. Persona override: do you want to override the preset-defined personas? (Default: use personas defined on the selected preset in `presets/overview.md`.)
+6. Persona override: do you want to override the preset-defined personas? (Default: use personas defined on the selected preset in `../library/presets/overview.md`.)
 
 Intake exit criteria:
 
@@ -87,7 +92,7 @@ Intake exit criteria:
 
 ## 2) Preset selection
 
-- Choose the best-fit preset from `presets/overview.md` based on the intended outcome + scope.
+- Choose the best-fit preset from `../library/presets/overview.md` based on the intended outcome + scope.
 - If no preset fits: propose a custom preset (name + personas + core/conditional actions + deliverables + checks) and wait for owner approval.
 - Use the personas defined on the selected preset (unless explicitly overridden).
 - Validate persona fit against the highest-cost failure modes in scope (personas are control points, not style tags).
@@ -98,7 +103,7 @@ Intake exit criteria:
   - core actions (minimum)
   - conditional actions (triggers)
   - any added actions (via the expansion rule)
-- Record the preset-defined personas (think-as / write-for / audit / polish) and their IDs (from `personas/`).
+- Record the preset-defined personas (think-as / write-for / audit / polish) and their IDs (from `../library/personas/`).
 - Record persona control mapping:
   - control objective per persona
   - failure modes each persona is expected to prevent
@@ -110,8 +115,9 @@ Intake exit criteria:
   - change classification policy (`cosmetic` / `structural` / `semantic` / `decision-impacting`)
   - receipt policy (one receipt per applied action)
   - approval policy for `semantic` / `decision-impacting` edits
+  - permissions status path + effective path boundaries used for this run
   - canonical source register and decision ledger paths
-- Confirm guardrails: keep edits limited to scope; second-order fixes outside scope are OK when needed (e.g., link updates, terminology alignment) as long as they stay bounded/mechanical and are recorded; label unknowns as `Question` / `Assumption` (see `LABELS.md`).
+- Confirm guardrails: keep edits limited to scope and permissions; second-order fixes outside scope are OK when needed (e.g., link updates, terminology alignment) as long as they stay bounded/mechanical, permission-allowed, and recorded; label unknowns as `Question` / `Assumption` (see `LABELS.md`).
 - Record preset selection, action plan, and audit bar selections under **Plan** in the plan.
 
 ## 4) Execute
@@ -122,8 +128,9 @@ Intake exit criteria:
 - Use the persona must-answer set as an execution checklist; unresolved items must be answered or explicitly deferred and labeled.
 - Classify each change as `cosmetic`, `structural`, `semantic`, or `decision-impacting`; record it in the plan.
 - Require explicit owner approval record for `semantic` and `decision-impacting` edits before finalizing the pass.
-- Write one action receipt per applied action under `.clarity/workflow/receipts/`.
-- Update `.clarity/workflow/canonical-sources.md` and `.clarity/workflow/decision-ledger.md` when new canonical sources or locked/open decisions are introduced.
+- Check path permissions before each edit: only modify files in `read and write allowed`; never modify `read-only`; do not read or modify `no access`.
+- Write one action receipt per applied action under `.methodologies/clarity/scratch/receipts/`.
+- Update `.methodologies/clarity/scratch/canonical-sources.md` and `.methodologies/clarity/scratch/decision-ledger.md` when new canonical sources or locked/open decisions are introduced.
 - Track scope-drift usage against the budget defined in the plan.
 - If conflicts appear and canonical sources are unclear, return to the intake loop to clarify before resolving.
 - Update the **Execution log** and **Changes summary** in the plan as you go.
@@ -139,11 +146,11 @@ selections in the report.
 Always include:
 
 - Content checks:
-  - General checks (from `presets/overview.md`).
-  - The selected preset's checks (from `presets/overview.md`).
+  - General checks (from `../library/presets/overview.md`).
+  - The selected preset's checks (from `../library/presets/overview.md`).
 - Persona checks:
   - the persona-based checks recorded in the plan's persona control mapping
-- Process-compliance checks (from `presets/overview.md`).
+- Process-compliance checks (from `../library/presets/overview.md`).
 
 Quality checks:
 
@@ -160,6 +167,7 @@ Process-compliance checks:
 - Approval gate: `semantic` / `decision-impacting` edits include explicit approval evidence.
 - Receipt completeness: one receipt exists per applied action.
 - Scope-drift budget: out-of-scope mechanical changes stay within the approved budget; exceedance is an automatic audit failure unless intake is revisited and approved.
+- Permissions compliance: reads/writes stayed within `.methodologies/clarity/status.md` permissions; no edits to `read-only`; no access to `no access`.
 - Register hygiene: canonical source register and decision ledger are current for this pass.
 - Traceability hygiene: report links to register/ledger/receipt artifacts.
 
@@ -187,12 +195,13 @@ Guardrail:
 
 ## 7) Report
 
-- Generate `.clarity/workflow/report.md` from `templates/report.md` using the plan as input.
+- Generate `.methodologies/clarity/scratch/report.md` from `templates/report.md` using the plan as input.
 - Include a compliance summary: change classification counts, scope-drift budget usage, receipt count, and register/ledger updates.
 
 ## Exit criteria
 
 - Changes are limited to scope (plus any second-order fixes needed to keep references consistent).
+- Changes and reads respect `.methodologies/clarity/status.md` permissions.
 - Scope-drift budget is respected (or explicitly escalated in intake).
 - Audit is complete (content checks + process-compliance checks) and polish has been applied.
 - Persona must-answer set is resolved or explicitly deferred as labeled open questions.

@@ -6,7 +6,7 @@ Personas are control points used per pass to shape:
 - Write-for: who the output is optimized for.
 
 Personas are selected once per pass (not per action) and recorded in
-`.clarity/workflow/plan.md` and `.clarity/workflow/report.md`.
+`.methodologies/clarity/scratch/plan.md` and `.methodologies/clarity/scratch/report.md`.
 
 Why this helps: persona controls make expected quality explicit up front, so
 authors spend less time correcting style-only variance and more time resolving
