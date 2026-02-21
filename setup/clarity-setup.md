@@ -16,37 +16,43 @@ repos and reference it from `AGENTS.md`.
 
 Use the helper script to copy `methodology/` + `library/` into another repo:
 
-```
-scripts/copy-clarity.sh /path/to/target-repo
+```bash
+scripts/copy-clarity.sh /path/to/target-repo [--delete] [--scope entire-repo|selected-paths] [--scope-path <repo-relative-path> ...]
 ```
 
 Add `--delete` to remove files from target methodology/library folders that no
 longer exist here. The `--delete` flag requires `rsync`.
 
+Use scope flags during setup when you already know boundaries:
+
+- `--scope entire-repo`: set Clarity operating scope to the whole repo.
+- `--scope selected-paths --scope-path <path> [...]`: set Clarity operating
+  scope to one or more repo-relative folders/files.
+- If scope flags are omitted, `status.md` is initialized with scope placeholders
+  to fill from user input.
+
 The helper also:
 
-- Creates `.methodologies/clarity/scratch/` (empty by default; files are
-  initialized by the agent when a pass starts).
+- Creates `.methodologies/clarity/scratch/`.
 - Creates/updates `.methodologies/clarity/.gitignore` to ignore
   `.methodologies/clarity/methodology/` and `.methodologies/clarity/library/`.
-- Creates `.methodologies/clarity/status.md` if missing and records primary local
-  methodology/library source paths under **Sources**.
-- Initializes a **Permissions** section in `.methodologies/clarity/status.md`
-  (`read and write allowed`, `read-only`, `no access`) so path boundaries are set
-  during setup and editable for later runs.
+- Ensures `.methodologies/clarity/status.md` includes **Sources** and
+  **Operating scope** and **Permissions** sections.
+- Ensures the **Permissions** section has required buckets
+  (`Read and write allowed`, `Read-only`, `No access`) with `(none)` defaults.
 
 ## AGENTS.md addition
 
 Add this section to the target repo `AGENTS.md`:
 
-```
+```md
 ## Clarity
 - Use Clarity for doc work: start with `.methodologies/clarity/methodology/WORKFLOW.md`.
-- Select a preset from `.methodologies/clarity/library/presets/overview.md` (or propose a custom preset for approval if none fits).
+- Start library selection at `.methodologies/clarity/library/overview.md`, then use `.methodologies/clarity/library/presets/overview.md` and `.methodologies/clarity/library/actions/index.md` as directed there (or propose a custom preset for approval if none fits).
 - Keep `.methodologies/clarity/scratch/plan.md`, `.methodologies/clarity/scratch/report.md`, `.methodologies/clarity/scratch/canonical-sources.md`, and `.methodologies/clarity/scratch/decision-ledger.md` updated.
 - Write one receipt per applied action under `.methodologies/clarity/scratch/receipts/`.
 - Classify substantive edits (`cosmetic` / `structural` / `semantic` / `decision-impacting`) and require explicit approval records for `semantic` / `decision-impacting` changes.
-- Read `.methodologies/clarity/status.md` before each pass and enforce its **Permissions** section (`read and write allowed` / `read-only` / `no access`) as hard boundaries.
+- Read `.methodologies/clarity/status.md` before each pass and enforce both **Operating scope** and **Permissions** (`read and write allowed` / `read-only` / `no access`).
 - Guardrails: stay within scope (bounded link/terminology fixes are OK); remove outdated info rather than leaving disclaimers; do not mention personas/meta-role narration in outputs.
 ```
 
@@ -57,5 +63,5 @@ Re-copy the contents of `methodology/` + `library/` into
 `scripts/copy-clarity.sh`.
 
 Update `.methodologies/clarity/status.md` **Sources** only when methodology/library
-source locations change. Update **Permissions** whenever allowed read/write/no-access
+source locations change. Update **Operating scope** and **Permissions** when run
 boundaries change.

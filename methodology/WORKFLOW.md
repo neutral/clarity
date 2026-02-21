@@ -17,9 +17,9 @@ Keep these files updated as shared execution artifacts. The owner and agent both
 update them as the pass progresses. Each branch should have a single active
 `plan.md` in `.methodologies/clarity/scratch/`.
 
-Before intake, read `.methodologies/clarity/status.md` and treat the
-**Permissions** section (`read and write allowed`, `read-only`, `no access`) as
-hard path boundaries for the run.
+Before intake, read `.methodologies/clarity/status.md` and treat both
+**Operating scope** and **Permissions** (`read and write allowed`, `read-only`,
+`no access`) as hard boundaries for the run.
 
 ## Why this sequence works
 
@@ -65,7 +65,7 @@ Required:
 4. Confusions: what feels unclear, risky, or easiest to misinterpret today?
 5. Terminology: which terms are overloaded or frequently misunderstood?
 6. Goals + non-goals: what are the explicit goals and non-goals?
-7. Permissions: what are the effective path boundaries from `.methodologies/clarity/status.md` (`read and write allowed`, `read-only`, `no access`), and does scope fit these boundaries?
+7. Status scope + permissions: what operating scope mode is defined in `.methodologies/clarity/status.md` (`entire-repo` or `selected-paths`), what in-scope roots are listed, what are effective permission boundaries (`read and write allowed`, `read-only`, `no access`), and does requested pass scope fit all of them?
 8. Compliance controls: what scope-drift budget applies, how changes are classified (`cosmetic` / `structural` / `semantic` / `decision-impacting`), whether action receipts are mandatory (recommended: yes), and what approval policy applies to `semantic` / `decision-impacting` edits?
 
 Optional (ask when it will affect decisions during the pass):
@@ -80,7 +80,8 @@ Optional (ask when it will affect decisions during the pass):
 Intake exit criteria:
 
 - The agent can restate scope (including exclusions), outcome, and non-goals in plain language.
-- The scope is small and repeatable (not “the whole wiki” unless explicitly intended).
+- The scope is small and repeatable (broad repo/wiki-wide passes only when
+  explicitly intended and aligned with `status.md` operating scope).
 - Any unresolved blockers are captured as explicit open questions (not implied).
 
 ## 1) Baseline scan
@@ -92,7 +93,10 @@ Intake exit criteria:
 
 ## 2) Preset selection
 
-- Choose the best-fit preset from `../library/presets/overview.md` based on the intended outcome + scope.
+- Start at `../library/overview.md` and follow its capability mapping to select
+  the best-fit preset/resources for the intended outcome + scope.
+- Use `../library/presets/overview.md` for preset details and
+  `../library/actions/index.md` for tactic expansion when needed.
 - If no preset fits: propose a custom preset (name + personas + core/conditional actions + deliverables + checks) and wait for owner approval.
 - Use the personas defined on the selected preset (unless explicitly overridden).
 - Validate persona fit against the highest-cost failure modes in scope (personas are control points, not style tags).
@@ -167,7 +171,8 @@ Process-compliance checks:
 - Approval gate: `semantic` / `decision-impacting` edits include explicit approval evidence.
 - Receipt completeness: one receipt exists per applied action.
 - Scope-drift budget: out-of-scope mechanical changes stay within the approved budget; exceedance is an automatic audit failure unless intake is revisited and approved.
-- Permissions compliance: reads/writes stayed within `.methodologies/clarity/status.md` permissions; no edits to `read-only`; no access to `no access`.
+- Scope + permissions compliance: reads/writes stayed within status operating
+  scope and permissions; no edits to `read-only`; no access to `no access`.
 - Register hygiene: canonical source register and decision ledger are current for this pass.
 - Traceability hygiene: report links to register/ledger/receipt artifacts.
 
@@ -201,7 +206,8 @@ Guardrail:
 ## Exit criteria
 
 - Changes are limited to scope (plus any second-order fixes needed to keep references consistent).
-- Changes and reads respect `.methodologies/clarity/status.md` permissions.
+- Changes and reads respect `.methodologies/clarity/status.md` operating scope
+  and permissions.
 - Scope-drift budget is respected (or explicitly escalated in intake).
 - Audit is complete (content checks + process-compliance checks) and polish has been applied.
 - Persona must-answer set is resolved or explicitly deferred as labeled open questions.
