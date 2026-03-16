@@ -1,215 +1,401 @@
 # Clarity Workflow
 
-This workflow is the end-to-end agent process for running a clarity pass against
-a project wiki.
+This file is the runtime contract for one Clarity pass.
 
-Key idea: run an **intake loop** until the agent can restate the user’s intent
-unambiguously; only then move on to scan/plan/execute.
+## Start Here
 
-When scoping begins in a target project wiki, create `.methodologies/clarity/scratch/` (if missing) and initialize:
+This file is authoritative for:
 
-- `.methodologies/clarity/scratch/plan.md` from `templates/plan.md`
-- `.methodologies/clarity/scratch/canonical-sources.md` from `templates/canonical-sources.md`
-- `.methodologies/clarity/scratch/decision-ledger.md` from `templates/decision-ledger.md`
-- `.methodologies/clarity/scratch/receipts/` for per-action receipts (using `templates/receipt.md`)
+- pass sequence
+- runtime initialization
+- permissions and approval gates
+- claim and evidence handling
+- audit, polish, report, and exit gates
 
-Keep these files updated as shared execution artifacts. The owner and agent both
-update them as the pass progresses. Each branch should have a single active
-`plan.md` in `.methodologies/clarity/scratch/`.
+Use these next documents:
+
+- `ARTIFACTS.md`: runtime artifact inventory and template mappings
+- `LIBRARY.md`: library usage boundaries
+- `../library/overview.md`: runtime library selection entrypoint
+- `../library/presets/overview.md`: preset catalog and selection model
+
+## Path Context
+
+Source repo:
+
+- `methodology/WORKFLOW.md`
+- relative template paths such as `templates/plan.md`
+
+Installed runtime:
+
+- `.methodologies/clarity/methodology/WORKFLOW.md`
+- runtime artifacts under `.methodologies/clarity/scratch/`
+
+## Run Unit
+
+A clarity pass run is the bounded execution recorded by one active
+`.methodologies/clarity/scratch/plan.md`.
+
+One pass run has:
+
+- one stable `Pass ID`
+- one primary scope and intended outcome
+- one selected preset or approved custom preset
+- one audit closeout
+- one report
+- one evidence run folder at
+  `.methodologies/clarity/scratch/evidence/<pass-id>/`
+
+Each branch should have one active `plan.md`. Evidence may accumulate as one
+run folder per `Pass ID`.
+
+## Hard Boundaries
 
 Before intake, read `.methodologies/clarity/status.md` and treat both
 **Operating scope** and **Permissions** (`read and write allowed`, `read-only`,
 `no access`) as hard boundaries for the run.
 
-## Why this sequence works
+These rules are always in force:
 
-This workflow is intentionally layered so wiki updates are easier to run and
-easier to review:
+- keep edits limited to scope plus approved bounded second-order fixes
+- check path permissions before each read or write
+- classify substantive edits as `cosmetic`, `structural`, `semantic`, or
+  `decision-impacting`
+- require explicit approval evidence for `semantic` and
+  `decision-impacting` edits before finalization
+- write one receipt per applied action
+- keep source register, decision ledger, and evidence current while the run is
+  active
 
-- Intake: remove ambiguity before editing.
-- Baseline scan: locate the highest-leverage gaps in the scoped slice.
-- Preset selection: choose a known playbook instead of inventing a process each run.
-- Plan: lock control knobs (scope, personas, checks, compliance).
-- Execute: apply actions with explicit change classification and receipts.
-- Audit: enforce quality + governance before polish.
-- Polish: improve readability without reopening decision risk.
-- Report: provide a reusable, auditable handoff for the next pass.
+## Runtime Initialization
 
-Result: authors spend less effort re-explaining context and resolving preventable
-drift, and more effort improving wiki quality.
+When scoping begins in a target project wiki, create
+`.methodologies/clarity/scratch/` if it is missing and initialize or update:
 
-## 0) Intake loop
+- `.methodologies/clarity/scratch/plan.md` from `templates/plan.md`
+- `.methodologies/clarity/scratch/canonical-sources.md` from
+  `templates/canonical-sources.md`
+- `.methodologies/clarity/scratch/decision-ledger.md` from
+  `templates/decision-ledger.md`
+- `.methodologies/clarity/scratch/receipts/` for per-action receipts using
+  `templates/receipt.md`
+- `.methodologies/clarity/scratch/evidence/<pass-id>/index.md` from
+  `templates/evidence/index.md` once the run has a stable `Pass ID`
+
+Use `assets/` inside the evidence run folder only when bulky raw artifacts are
+needed.
+
+`Pass ID` should be stable for the life of the run. A practical default is
+`P-YYYYMMDD-<short-scope-or-intent-slug>`.
+
+## Claim And Evidence Loop
+
+Claims and evidence are a required runtime loop that stays active during
+**Plan**, **Execute**, and **Audit**.
+
+These rules are always in force:
+
+- load the runtime claim catalog from `../library/claims/README.md` before
+  planning completes
+- create `.methodologies/clarity/scratch/evidence/<pass-id>/index.md` once
+  `Pass ID` is stable
+- use the evidence index as the canonical place for claim coverage, evidence
+  inventory, and current verdicts
+- keep each evidence item in the shared four-part shape:
+  - claim
+  - method or context
+  - observations and raw artifacts
+  - verdict
+- open baseline claim threads for every run:
+  - `intent-target`
+  - `boundary-compliance`
+  - `verification-posture`
+- activate conditional claim types when materially relevant:
+  - `authority-basis`
+  - `diagnosis`
+  - `transformation`
+  - `coverage-propagation`
+  - `governance-ownership`
+  - `residual-uncertainty`
+- create a new evidence item when the concrete claim, scoped subject, or proof
+  target changes materially
+- enrich an existing evidence item when the same concrete claim is gaining more
+  support, artifacts, or a refined verdict
+- update evidence before moving past the work that made the claim material
+- treat stale or missing evidence for materially active claims as an audit
+  failure
+- let plan and report summarize evidence posture without duplicating the
+  evidence index inventory
+
+## 0) Intake Loop
 
 Collect the minimum inputs needed to run a pass. If any required input is
 missing or ambiguous, ask follow-ups and do not proceed.
 
-Initialize `.methodologies/clarity/scratch/plan.md` (from `templates/plan.md`) and record
-answers under **Intent** and **Intake log**.
+Initialize `.methodologies/clarity/scratch/plan.md` from `templates/plan.md`
+and record answers under **Intent** and **Intake log**.
 
-Note (Why We Plan / “Thinking Budget”): The plan is not paperwork; it is a
-deliberate way to constrain degrees of freedom so the agent doesn’t repeatedly
-re-decide the basics while writing. Its job is to lock down the parameters that
-should be stable for the pass (scope, intended outcome, preset selection, personas,
-checks/definition-of-done, constraints, and canonical sources), and to explicitly
-allocate the agent’s reasoning to the uncertain, high-leverage work inside the
-scope (structure, missing seams, inconsistencies, risks/mitigations, and decision
-traceability). If execution reveals a new constraint, dependency, or conflict
-that changes the “thinking budget,” record it and return to intake rather than
-silently drifting.
+The plan is not paperwork. Its job is to lock down the parameters that should
+stay stable for the pass so the agent spends reasoning on the uncertain,
+high-leverage work inside the scope.
 
 Required:
 
-1. Scope: which pages/areas are in scope (paths/headings/labels)? Any explicit exclusions? Are second-order fixes allowed outside this scope (default: yes for bounded, mechanical fixes like link updates or terminology alignment)?
-2. Intended outcome: what clarity outcome do you want (one sentence)?
-3. Audience + task: who is the primary audience and what do they need to do?
+1. Scope: which pages or areas are in scope (paths, headings, labels)? Any
+   explicit exclusions? Are second-order fixes allowed outside this scope
+   (default: yes for bounded, mechanical fixes like link updates or terminology
+   alignment)?
+2. Intended outcome: what clarity outcome do you want?
+3. Audience and task: who is the primary audience and what do they need to do?
 4. Confusions: what feels unclear, risky, or easiest to misinterpret today?
 5. Terminology: which terms are overloaded or frequently misunderstood?
-6. Goals + non-goals: what are the explicit goals and non-goals?
-7. Status scope + permissions: what operating scope mode is defined in `.methodologies/clarity/status.md` (`entire-repo` or `selected-paths`), what in-scope roots are listed, what are effective permission boundaries (`read and write allowed`, `read-only`, `no access`), and does requested pass scope fit all of them?
-8. Compliance controls: what scope-drift budget applies, how changes are classified (`cosmetic` / `structural` / `semantic` / `decision-impacting`), whether action receipts are mandatory (recommended: yes), and what approval policy applies to `semantic` / `decision-impacting` edits?
+6. Goals and non-goals: what are the explicit goals and non-goals?
+7. Status scope and permissions: what operating scope mode is defined in
+   `.methodologies/clarity/status.md`, what in-scope roots are listed, what are
+   effective permission boundaries, and does requested pass scope fit all of
+   them?
+8. Compliance controls: what scope-drift budget applies, how changes are
+   classified (`cosmetic` / `structural` / `semantic` /
+   `decision-impacting`), whether action receipts are mandatory
+   (recommended: yes), and what approval policy applies to `semantic` /
+   `decision-impacting` edits?
 
-Optional (ask when it will affect decisions during the pass):
+Optional, but ask when it will affect decisions during the pass:
 
 1. Canonical sources: what sources are authoritative if conflicts appear?
 2. Fixed vs open: which decisions are fixed vs still open?
-3. Style constraints: tone/format/length constraints?
-4. “Done” definition: what does done look like for this pass?
-5. Deadlines/dependencies: anything shaping scope or sequencing?
-6. Persona override: do you want to override the preset-defined personas? (Default: use personas defined on the selected preset in `../library/presets/overview.md`.)
+3. Style constraints: tone, format, or length constraints?
+4. Definition of done: what does done look like for this pass?
+5. Deadlines or dependencies: anything shaping scope or sequencing?
+6. Persona override: do you want to override preset-defined personas?
+
+During intake:
+
+- assign or confirm `Pass ID` once scope and intended outcome are concrete
+  enough to name the run
+- record the future evidence run path in the plan
 
 Intake exit criteria:
 
-- The agent can restate scope (including exclusions), outcome, and non-goals in plain language.
-- The scope is small and repeatable (broad repo/wiki-wide passes only when
-  explicitly intended and aligned with `status.md` operating scope).
-- Any unresolved blockers are captured as explicit open questions (not implied).
+- the agent can restate scope, exclusions, intended outcome, and non-goals in
+  plain language
+- the scope is small and repeatable unless a broader pass is explicitly
+  intended
+- unresolved blockers are captured as explicit open questions
+- the run is concrete enough to support planning and evidence initialization
 
-## 1) Baseline scan
+## 1) Baseline Scan
 
-- List candidate pages/areas in scope and current clarity state (WIP, draft, stable).
-- Note hotspots that affect planning (overlap, drift, missing sections, weak definitions).
-- If the scan reveals scope mismatch or missing intent, return to the intake loop.
-- Record scan notes under **Baseline scan** in the plan.
+- list candidate pages or areas in scope and current clarity state (WIP, draft,
+  stable)
+- note hotspots that affect planning: overlap, drift, missing sections, weak
+  definitions, unsupported statements, broken propagation, or ambiguity
+- note likely conditional claim activations:
+  `authority-basis`, `diagnosis`, `transformation`,
+  `coverage-propagation`, `governance-ownership`, and
+  `residual-uncertainty`
+- if the scan reveals scope mismatch or missing intent, return to **Intake**
+- record scan notes under **Baseline scan** in the plan
 
-## 2) Preset selection
+## 2) Library Selection
 
-- Start at `../library/overview.md` and follow its capability mapping to select
-  the best-fit preset/resources for the intended outcome + scope.
-- Use `../library/presets/overview.md` for preset details and
-  `../library/actions/index.md` for tactic expansion when needed.
-- If no preset fits: propose a custom preset (name + personas + core/conditional actions + deliverables + checks) and wait for owner approval.
-- Use the personas defined on the selected preset (unless explicitly overridden).
-- Validate persona fit against the highest-cost failure modes in scope (personas are control points, not style tags).
+- start at `../library/overview.md` and follow its capability mapping to select
+  the best-fit preset and actions for the intended outcome and scope
+- select the best-fit preset from `../library/presets/overview.md`
+- use the personas defined on the selected preset unless explicitly overridden
+- use the action expansion rule from `../library/actions/index.md` when
+  preset-defined actions are not enough
+- load the runtime claim catalog from `../library/claims/README.md`
+- open the claim type folders for baseline claims and any likely conditional
+  claims
+- use `claim.md` in each claim type folder to check applicability and phrase
+  concrete claims
+- use `evidence.md` in each claim type folder to understand evidence structure,
+  verdict meanings, and thread-splitting rules
+
+If no preset fits, propose a custom preset and wait for owner approval before
+proceeding.
 
 ## 3) Plan
 
-- Record the preset-defined action plan:
-  - core actions (minimum)
-  - conditional actions (triggers)
-  - any added actions (via the expansion rule)
-- Record the preset-defined personas (think-as / write-for / audit / polish) and their IDs (from `../library/personas/`).
-- Record persona control mapping:
+- record the preset-defined action plan:
+  - core actions
+  - conditional actions and their triggers
+  - any added actions and why they were added
+- record the selected personas and their IDs from `../library/personas/`
+- record persona control mapping:
   - control objective per persona
-  - failure modes each persona is expected to prevent
-  - must-answer questions to resolve (or explicitly defer as `Question`)
+  - failure modes each persona should prevent
+  - must-answer questions to resolve or explicitly defer
   - persona-based checks to run at audit
-- Choose an audit bar (checks + writing principles) that matches the planned changes.
-- Set compliance controls:
-  - scope-drift budget (and unit: files or edits)
-  - change classification policy (`cosmetic` / `structural` / `semantic` / `decision-impacting`)
-  - receipt policy (one receipt per applied action)
+- choose an audit bar that matches the planned changes
+- set compliance controls:
+  - scope-drift budget
+  - change classification policy
+  - receipt policy
   - approval policy for `semantic` / `decision-impacting` edits
-  - permissions status path + effective path boundaries used for this run
+  - permissions status path and effective path boundaries
   - canonical source register and decision ledger paths
-- Confirm guardrails: keep edits limited to scope and permissions; second-order fixes outside scope are OK when needed (e.g., link updates, terminology alignment) as long as they stay bounded/mechanical, permission-allowed, and recorded; label unknowns as `Question` / `Assumption` (see `LABELS.md`).
-- Record preset selection, action plan, and audit bar selections under **Plan** in the plan.
+  - claim catalog path and evidence run path
+- once `Pass ID` is stable, create the evidence run folder and index
+- open baseline evidence items when they are concrete enough to state:
+  - `intent-target` once intended outcome, audience, and success target are
+    concrete enough to state
+  - `boundary-compliance` once scope, permissions, exclusions, and
+    second-order-fix rules are concrete enough to state
+  - `verification-posture` once the audit bar is selected, even if its verdict
+    remains `open` until later
+- confirm guardrails:
+  - edits stay inside scope and permissions
+  - bounded mechanical second-order fixes are recorded
+  - unknowns are labeled as `Question` or `Assumption`
+- record preset selection, action plan, and audit bar in the plan
 
 ## 4) Execute
 
-- Execution is primarily guided by the think-as and write-for personas defined on the selected preset.
-- Apply the core actions, then apply conditional actions as their triggers are observed.
-- If you add an action, record "Added action: X; Trigger: Y; Artifact: Z" in the plan (do not return to intake for this alone).
-- Use the persona must-answer set as an execution checklist; unresolved items must be answered or explicitly deferred and labeled.
-- Classify each change as `cosmetic`, `structural`, `semantic`, or `decision-impacting`; record it in the plan.
-- Require explicit owner approval record for `semantic` and `decision-impacting` edits before finalizing the pass.
-- Check path permissions before each edit: only modify files in `read and write allowed`; never modify `read-only`; do not read or modify `no access`.
-- Write one action receipt per applied action under `.methodologies/clarity/scratch/receipts/`.
-- Update `.methodologies/clarity/scratch/canonical-sources.md` and `.methodologies/clarity/scratch/decision-ledger.md` when new canonical sources or locked/open decisions are introduced.
-- Track scope-drift usage against the budget defined in the plan.
-- If conflicts appear and canonical sources are unclear, return to the intake loop to clarify before resolving.
-- Update the **Execution log** and **Changes summary** in the plan as you go.
+- execution is primarily guided by the selected think-as and write-for personas
+- apply the core actions, then apply conditional actions as their triggers are
+  observed
+- if you add an action, record it in the plan with trigger and artifact
+- use the persona must-answer set as an execution checklist
+- classify each change as `cosmetic`, `structural`, `semantic`, or
+  `decision-impacting` and record it in the plan
+- require explicit owner approval evidence for `semantic` and
+  `decision-impacting` edits before finalizing the pass
+- check path permissions before each edit:
+  - only modify `read and write allowed`
+  - never modify `read-only`
+  - do not read or modify `no access`
+- write one action receipt per applied action under
+  `.methodologies/clarity/scratch/receipts/`
+- in each receipt, record the claim types affected and the evidence items
+  created or updated by that action
+- update `.methodologies/clarity/scratch/canonical-sources.md` and
+  `.methodologies/clarity/scratch/decision-ledger.md` when new canonical
+  sources or locked/open decisions are introduced
+- keep the claim and evidence loop active as work happens:
+  - if a material conditional claim becomes active, create its evidence item
+    before moving on
+  - add observations that support or weaken the claim
+  - link receipts, registers, ledger entries, and scoped pages
+  - reference raw artifacts when needed
+  - split evidence threads when one claim stops being inspectable as one unit
+  - keep verdicts current when support changes materially
+- keep the evidence index inventory current with new or enriched evidence
+  items
+- track scope-drift usage against the budget defined in the plan
+- if conflicts appear and canonical sources are unclear, return to **Intake**
+  before resolving them
+- update the plan's **Execution log** and **Changes summary** sections as you
+  go
 
-## 5) Audit (hard gate)
+## 5) Audit (Hard Gate)
 
-Audit is mandatory and dual-gated. Apply the audit persona(s), run content checks
-and process-compliance checks, and fix any failures before moving on.
-
-Pick one or more checks and principles that match what you changed. Record your
-selections in the report.
+Audit is mandatory and dual-gated. Apply the audit persona(s), run content
+checks and process-compliance checks, and fix failures before moving on.
 
 Always include:
 
-- Content checks:
-  - General checks (from `../library/presets/overview.md`).
-  - The selected preset's checks (from `../library/presets/overview.md`).
-- Persona checks:
-  - the persona-based checks recorded in the plan's persona control mapping
-- Process-compliance checks (from `../library/presets/overview.md`).
+- general content checks
+- the selected preset's checks
+- the persona-based checks recorded in the plan
+- the methodology-wide process-compliance checks below
 
-Quality checks:
+General content checks:
 
-- Structure: sections, ordering, and scannability.
-- Precision: unambiguous wording and testable statements.
-- Consistency: terms and claims align across pages.
-- Narrative flow: logical progression and minimal context switching.
-- Completeness: required context is present for the intended task.
-- Traceability: key claims link to sources or decisions.
+- Anti-bleed: outputs do not mention personas or contain meta-role narration.
+- Scope discipline: changes stay within scope plus bounded mechanical
+  second-order fixes, and those fixes are recorded.
+- Visible uncertainty: unknowns are labeled as `Assumption` or `Question`.
+- Canonicality: avoid duplicating facts across pages; if overlap exists, pick a
+  canonical source and cross-link.
+- Link/rename hygiene: moved or renamed pages have links updated and navigation
+  remains intact.
+- Fixed decisions: do not contradict locked decisions; if conflicts appear,
+  return to **Intake** to confirm canonical sources.
+- Structure: sections, ordering, and scanability fit the pass.
+- Precision: wording is unambiguous and statements are testable where
+  applicable.
+- Consistency: terms and claims align across the scoped surfaces.
+- Completeness: required context exists for the intended task.
+- Traceability: key claims link to sources, decisions, or evidence.
 
 Process-compliance checks:
 
-- Change classification: all substantive edits are classified (`cosmetic` / `structural` / `semantic` / `decision-impacting`) and recorded.
-- Approval gate: `semantic` / `decision-impacting` edits include explicit approval evidence.
+- Change classification: all substantive edits are classified and recorded.
+- Approval gate: `semantic` / `decision-impacting` edits include explicit
+  approval evidence.
 - Receipt completeness: one receipt exists per applied action.
-- Scope-drift budget: out-of-scope mechanical changes stay within the approved budget; exceedance is an automatic audit failure unless intake is revisited and approved.
-- Scope + permissions compliance: reads/writes stayed within status operating
-  scope and permissions; no edits to `read-only`; no access to `no access`.
-- Register hygiene: canonical source register and decision ledger are current for this pass.
-- Traceability hygiene: report links to register/ledger/receipt artifacts.
+- Scope-drift budget: out-of-scope mechanical changes stay within the approved
+  budget; exceedance is an automatic audit failure unless intake is revisited
+  and approved.
+- Scope and permissions compliance: reads and writes stayed within declared
+  operating scope and permissions.
+- Register hygiene: canonical source register and decision ledger are current
+  for this pass.
+- Evidence completeness:
+  - evidence run index exists for the current `Pass ID`
+  - baseline claim threads exist and have current verdicts
+  - materially active conditional claims have evidence items or an explicit
+    rationale for not activating
+  - evidence items reference the receipts, register, ledger, and report fields
+    that matter to the claim
+  - stale or missing evidence is an audit failure until corrected
 
-Writing principles:
+During audit:
 
-- Audience-first: state who a page/section is for and what it enables.
-- Single source of truth: avoid duplicating facts across files.
-- Explicit scope: clear goals, non-goals, and boundaries.
-- Decision traceability: decisions include rationale and tradeoffs.
-- Evidence-backed claims: link key claims to sources.
-- Consistent terminology: definitions are stable and reused.
-- Measurable outcomes: success criteria and acceptance criteria exist.
-- Detail seams: interfaces, workflows, and edge cases are explicit where they matter.
-- Visible uncertainty: assumptions and questions are labeled.
+- update `verification-posture` evidence with checks run, results, failures,
+  and blind spots
+- update the verdict on every active evidence item
+- close out evidence items that are stable for the current run
+- carry forward any `open` or `incomplete` evidence into the report and
+  next-pass notes
 
-## 6) Polish (hard gate)
+Re-entry rules:
+
+- if audit shows unsupported content or incomplete transformation support,
+  return to **Execute**
+- if audit shows a scope, authority, or approval mismatch, return to
+  **Intake** or **Plan** as appropriate
+
+## 6) Polish (Hard Gate)
 
 Polish is mandatory after audit. Apply the polish persona (recommended:
-`technical-editor`) and improve scanability and consistency without introducing
-new unsafe changes.
+`technical-editor`) and improve scanability and consistency without
+introducing new unsafe changes.
 
 Guardrail:
 
-- If polish requires substantive changes (new claims, new decisions, meaning changes, new interfaces), return to **Audit** after making them.
+- if polish requires new claims, new decisions, meaning changes, or new
+  interfaces, update the affected evidence threads and return to **Audit**
 
-## 7) Report
+## 7) Report And Evidence Closeout
 
-- Generate `.methodologies/clarity/scratch/report.md` from `templates/report.md` using the plan as input.
-- Include a compliance summary: change classification counts, scope-drift budget usage, receipt count, and register/ledger updates.
+- generate `.methodologies/clarity/scratch/report.md` from
+  `templates/report.md`
+- link the evidence index in the report and summarize only overall evidence
+  posture plus open or incomplete evidence threads that matter to handoff
+- include a compliance summary: change classification counts, scope-drift
+  usage, receipt count, register or ledger updates, and evidence status
+- finalize `.methodologies/clarity/scratch/evidence/<pass-id>/index.md`:
+  - update status
+  - update end timestamp when known
+  - confirm evidence inventory
+  - summarize current run verdict and open follow-ups
 
-## Exit criteria
+## Exit Criteria
 
-- Changes are limited to scope (plus any second-order fixes needed to keep references consistent).
-- Changes and reads respect `.methodologies/clarity/status.md` operating scope
-  and permissions.
-- Scope-drift budget is respected (or explicitly escalated in intake).
-- Audit is complete (content checks + process-compliance checks) and polish has been applied.
-- Persona must-answer set is resolved or explicitly deferred as labeled open questions.
-- Open questions are captured.
-- The report explains what changed and why.
+- changes are limited to scope plus approved bounded second-order fixes
+- changes and reads respect `.methodologies/clarity/status.md` operating scope
+  and permissions
+- scope-drift budget is respected or explicitly escalated in intake
+- audit is complete, polish has been applied, and audit results are reflected
+  in `verification-posture`
+- baseline claims `intent-target`, `boundary-compliance`, and
+  `verification-posture` are captured as evidence with current verdicts
+- material conditional claims are either captured as evidence or explicitly
+  marked not active for this run
+- persona must-answer questions are resolved or explicitly deferred
+- open questions, residual uncertainty, and incomplete evidence are captured
+- the report explains what changed, why, what was checked, and where supporting
+  evidence lives

@@ -6,16 +6,19 @@ Purpose: Resolve overlap and conflicts for a topic by selecting a canonical sour
 and aligning all scoped pages to it.
 
 Inputs:
+
 - Scope (paths/headings/labels)
 - Canonical source register (`.methodologies/clarity/scratch/canonical-sources.md` when available)
 - Locked/open decisions (`.methodologies/clarity/scratch/decision-ledger.md` when relevant)
 
 Preconditions:
+
 - Scope and exclusions are explicit.
 - Source authority order is defined (register or explicit owner direction).
 - Locked decisions for in-scope topics are identified.
 
 Actions:
+
 1) Build a topic overlap table:
    - topic
    - pages/sections where it appears
@@ -39,6 +42,7 @@ Actions:
    - cross-links to canonical source exist for aligned pages
 
 Outputs:
+
 - Canonical topic mapping with conflict resolutions:
   - Topic
   - Canonical source
@@ -49,16 +53,19 @@ Outputs:
 - Explicit open questions for unresolved source authority.
 
 Quality checks:
+
 - Each overlapping in-scope topic has exactly one canonical source.
 - No in-scope conflict remains unresolved unless explicitly labeled `Question`.
 - Every non-canonical statement that remains points to the canonical section.
 - No locked decision is contradicted by reconciliation changes.
 
 Return-to-intake triggers:
+
 - Two authoritative sources conflict and precedence is not defined.
 - Reconciliation would change a locked decision's meaning.
 - Required cross-scope mechanical updates would exceed approved drift budget.
 
 Plan/report logging:
+
 - Plan trace line: `canonicalize-topic | trigger | sources used | topics aligned | checks passed`.
 - Report summary: topics canonicalized, files aligned, unresolved authority questions.

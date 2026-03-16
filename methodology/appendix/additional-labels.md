@@ -1,12 +1,11 @@
 # Additional Labels
 
-This appendix extends the core taxonomy in `../LABELS.md`.
+This appendix is a reference surface only.
 
-Use these labels when the core set is insufficient for the current scope.
-Maintain the same inference model (page defaults -> section defaults -> block
-overrides).
+Label rules and the core taxonomy live in `../LABELS.md`. Use this appendix
+only when the core set is not enough for the current scope.
 
-## Core statements
+## Core Statements
 
 ### Principle
 
@@ -26,7 +25,7 @@ Definition: A concrete instance that illustrates a statement.
 Use: Clarify abstract points.
 Avoid: Introducing new requirements via examples.
 
-## Goals and scope
+## Goals And Scope
 
 ### Success Criterion
 
@@ -59,7 +58,7 @@ Definition: A known problem or blocker that needs resolution.
 Use: Track active impediments.
 Avoid: Future risks without evidence.
 
-## Business and market
+## Business And Market
 
 ### Business Objective
 
@@ -109,7 +108,7 @@ Definition: Market conditions or trends affecting decisions.
 Use: Timing, risk, and positioning context.
 Avoid: Irrelevant industry trivia.
 
-## People and users
+## People And Users
 
 ### Audience
 
@@ -195,7 +194,7 @@ Definition: An uncommon condition that affects behavior.
 Use: Guardrails and validation.
 Avoid: Core flows.
 
-## Research and evidence
+## Research And Evidence
 
 ### Hypothesis
 
@@ -269,7 +268,7 @@ Definition: A quantifiable measure of performance.
 Use: KPIs, success measures, or health indicators.
 Avoid: Qualitative goals.
 
-## Planning and delivery
+## Planning And Delivery
 
 ### Feature
 

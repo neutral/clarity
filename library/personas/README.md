@@ -1,56 +1,79 @@
 # Personas
 
+This file is authoritative for persona selection and the persona-family starter
+rules.
+
+## Start Here
+
+Use this file when you need to answer:
+
+- how Clarity chooses think-as and write-for personas
+- what each persona file must contain
+- which persona IDs are currently available
+
+Use these next documents:
+
+- one persona leaf file for mission, priorities, and must-answer questions
+- `../presets/overview.md` for preset-defined persona bundles
+- `../../methodology/WORKFLOW.md` for how personas are recorded in plan and
+  report artifacts
+
+## Path Context
+
+Source repo:
+
+- `library/personas/README.md`
+
+Installed runtime:
+
+- `.methodologies/clarity/library/personas/README.md`
+
+## Persona Model
+
 Personas are control points used per pass to shape:
 
-- Think-as: how the agent reasons about the scope.
-- Write-for: who the output is optimized for.
+- Think-as: how the agent reasons about the scope
+- Write-for: who the output is optimized for
 
-Personas are selected once per pass (not per action) and recorded in
-`.methodologies/clarity/scratch/plan.md` and `.methodologies/clarity/scratch/report.md`.
-
-Why this helps: persona controls make expected quality explicit up front, so
-authors spend less time correcting style-only variance and more time resolving
-real content/decision gaps.
-
-Default selection: use the personas defined on the selected preset in
-`../presets/overview.md` (override only when explicitly needed).
+Personas are selected once per pass, not per action. Default selection comes
+from the selected preset in `../presets/overview.md`.
 
 Do not treat personas as style tags. A persona is useful only if it changes:
 
-- what failure modes are actively prevented,
-- what questions must be answered before claiming completion,
-- what checks are run at audit time, and
-- what decisions/actions the output enables for its audience.
+- what failure modes are actively prevented
+- what questions must be answered before claiming completion
+- what checks are run at audit time
+- what decisions or actions the output enables for its audience
 
-Persona file format is intentionally small so it can be applied reliably. Avoid
-embedding preset-specific output templates here (presets/actions decide the
-shape of the docs); personas define the control mode and quality bar.
+## Persona File Structure
 
-Required sections:
+Each persona file should keep this order:
 
 - `Mission`
-- `When To Use` (include a short "Avoid when" if helpful)
+- `When To Use`
 - `Control Mode (Think-As / Write-For)`
-- `Priorities` (ordered list)
+- `Priorities`
 - `Must-Answer`
 - `Failure Modes (Avoid)`
 
-Recommended control contract (record in plan/report):
+Recommended control contract to record in plan and report:
 
-- Control objective: what risk this persona controls.
-- Failure modes prevented: top 2-5 mistakes this persona should block.
-- Must-answer set: questions this persona forces the pass to answer or explicitly defer.
-- Persona checks: objective checks tied to this persona's control objective.
+- control objective
+- failure modes prevented
+- must-answer set
+- persona checks
 
-## Selection model (control-first)
+## Selection Model
 
 1. Choose think-as by the highest-cost failure modes in scope.
-2. Choose write-for by decision owner and required action (not tone preference).
+2. Choose write-for by decision owner and required action, not tone
+   preference.
 3. Choose audit personas to be adversarial to the likely failure modes.
-4. In multi-agent/compliance-heavy runs, include `process-compliance`.
-5. Keep the persona set minimal; each added persona must add a distinct control.
+4. In multi-agent or compliance-heavy runs, include `process-compliance`.
+5. Keep the persona set minimal; each added persona must add a distinct
+   control.
 
-## Current persona control map
+## Current Persona Control Map
 
 | Persona | Primary control focus | Typical failures prevented |
 | --- | --- | --- |
@@ -62,13 +85,13 @@ Recommended control contract (record in plan/report):
 | `ceo` | Investment narrative and risk gates | Narrative without accountability, unclear go/no-go gates |
 | `security-auditor` | Threat model and mitigations | Security claims without controls, undefined trust boundaries |
 | `sre-operator` | Reliability and day-2 operations | No rollback/observability, undefined on-call posture |
-| `process-compliance` | Workflow/policy adherence | Missing receipts, uncontrolled drift, non-auditable runs |
+| `process-compliance` | Workflow and policy adherence | Missing receipts, uncontrolled drift, non-auditable runs |
 | `propagation-auditor` | Cross-surface propagation coverage | Partial rollout, stale guidance, unresolved cross-doc conflicts |
 | `developer-power-user` | Integration precision and tooling | Missing prerequisites, vague contracts, weak troubleshooting |
 | `end-user` | User workflow predictability | Jargon-heavy docs, no failure/recovery path |
 | `technical-editor` | Precision and consistency hygiene | Ambiguous prose, terminology drift, link/navigation decay |
 
-Available personas (current):
+## Available Personas
 
 - `cto-feasibility`
 - `architect`

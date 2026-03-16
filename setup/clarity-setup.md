@@ -1,67 +1,95 @@
 # Clarity Setup
 
-Use this repo as the canonical source for Clarity. Copy the contents of
-`methodology/` and `library/` into `.methodologies/clarity/` in project wiki
-repos and reference it from `AGENTS.md`.
+Use this file to install or update Clarity in another repo.
 
-## Folder setup
+## Start Here
 
-1. Copy `methodology/` and `library/` from this repo into:
-   - `.methodologies/clarity/methodology/`
-   - `.methodologies/clarity/library/`
-2. Keep `.methodologies/clarity/` in the repo root; if you relocate it, update the
-   paths below.
+This file is authoritative for:
 
-## Helper script
+- copying Clarity from the source repo into a target repo
+- initializing installed-runtime folders and status files
+- adding the Clarity section to a target repo `AGENTS.md`
 
-Use the helper script to copy `methodology/` + `library/` into another repo:
+Use these next documents:
+
+- `../README.md`: source-repo entrypoint
+- `.methodologies/clarity/methodology/WORKFLOW.md` in the target repo: runtime
+  contract after installation
+
+## Path Context
+
+Source repo:
+
+- `methodology/`
+- `library/`
+- `scripts/copy-clarity.sh`
+
+Installed runtime:
+
+- `.methodologies/clarity/methodology/`
+- `.methodologies/clarity/library/`
+- `.methodologies/clarity/status.md`
+- `.methodologies/clarity/scratch/`
+
+## Install Clarity In A Target Repo
+
+1. Copy `methodology/` and `library/` from this source repo into the target
+   repo under `.methodologies/clarity/`.
+2. Keep `.methodologies/clarity/` in the repo root. If you relocate it, update
+   all installed-runtime paths accordingly.
+3. Add the Clarity section to the target repo `AGENTS.md`.
+4. Set operating scope and permissions in
+   `.methodologies/clarity/status.md`.
+
+## Helper Script
+
+Use the helper script from the source repo:
 
 ```bash
 scripts/copy-clarity.sh /path/to/target-repo [--delete] [--scope entire-repo|selected-paths] [--scope-path <repo-relative-path> ...]
 ```
 
-Add `--delete` to remove files from target methodology/library folders that no
-longer exist here. The `--delete` flag requires `rsync`.
+Add `--delete` to remove files from target methodology or library folders that
+no longer exist here. The `--delete` flag requires `rsync`.
 
-Use scope flags during setup when you already know boundaries:
+Scope flags:
 
-- `--scope entire-repo`: set Clarity operating scope to the whole repo.
-- `--scope selected-paths --scope-path <path> [...]`: set Clarity operating
-  scope to one or more repo-relative folders/files.
-- If scope flags are omitted, `status.md` is initialized with scope placeholders
-  to fill from user input.
+- `--scope entire-repo`: set installed runtime operating scope to the whole
+  repo
+- `--scope selected-paths --scope-path <path> [...]`: set installed runtime
+  operating scope to one or more repo-relative folders or files
+- if scope flags are omitted, `status.md` is initialized with placeholders
 
 The helper also:
 
-- Creates `.methodologies/clarity/scratch/`.
-- Creates/updates `.methodologies/clarity/.gitignore` to ignore
-  `.methodologies/clarity/methodology/` and `.methodologies/clarity/library/`.
-- Ensures `.methodologies/clarity/status.md` includes **Sources** and
-  **Operating scope** and **Permissions** sections.
-- Ensures the **Permissions** section has required buckets
-  (`Read and write allowed`, `Read-only`, `No access`) with `(none)` defaults.
+- creates `.methodologies/clarity/scratch/`
+- creates or updates `.methodologies/clarity/.gitignore` to ignore copied
+  methodology and library content
+- ensures `.methodologies/clarity/status.md` includes **Sources**,
+  **Operating scope**, and **Permissions**
+- ensures **Permissions** has `Read and write allowed`, `Read-only`, and
+  `No access` buckets with `(none)` defaults
 
-## AGENTS.md addition
+## AGENTS.md Addition
 
 Add this section to the target repo `AGENTS.md`:
 
 ```md
 ## Clarity
 - Use Clarity for doc work: start with `.methodologies/clarity/methodology/WORKFLOW.md`.
-- Start library selection at `.methodologies/clarity/library/overview.md`, then use `.methodologies/clarity/library/presets/overview.md` and `.methodologies/clarity/library/actions/index.md` as directed there (or propose a custom preset for approval if none fits).
+- Start library selection at `.methodologies/clarity/library/overview.md`, then use `.methodologies/clarity/library/presets/overview.md` and `.methodologies/clarity/library/actions/index.md` as directed there.
 - Keep `.methodologies/clarity/scratch/plan.md`, `.methodologies/clarity/scratch/report.md`, `.methodologies/clarity/scratch/canonical-sources.md`, and `.methodologies/clarity/scratch/decision-ledger.md` updated.
 - Write one receipt per applied action under `.methodologies/clarity/scratch/receipts/`.
 - Classify substantive edits (`cosmetic` / `structural` / `semantic` / `decision-impacting`) and require explicit approval records for `semantic` / `decision-impacting` changes.
 - Read `.methodologies/clarity/status.md` before each pass and enforce both **Operating scope** and **Permissions** (`read and write allowed` / `read-only` / `no access`).
-- Guardrails: stay within scope (bounded link/terminology fixes are OK); remove outdated info rather than leaving disclaimers; do not mention personas/meta-role narration in outputs.
+- Guardrails: stay within scope (bounded link or terminology fixes are OK); remove outdated info rather than leaving disclaimers; do not mention personas or meta-role narration in outputs.
 ```
 
-## Updating Clarity in a target repo
+## Update An Existing Install
 
-Re-copy the contents of `methodology/` + `library/` into
-`.methodologies/clarity/` when updates are needed or use
-`scripts/copy-clarity.sh`.
+Re-copy `methodology/` and `library/` into `.methodologies/clarity/` when
+updates are needed or use `scripts/copy-clarity.sh`.
 
-Update `.methodologies/clarity/status.md` **Sources** only when methodology/library
-source locations change. Update **Operating scope** and **Permissions** when run
-boundaries change.
+Update `.methodologies/clarity/status.md` **Sources** only when methodology or
+library source locations change. Update **Operating scope** and **Permissions**
+when run boundaries change.

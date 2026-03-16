@@ -2,8 +2,12 @@
 
 Purpose: keep decision posture explicit and prevent drift across pages/files.
 
+Installed runtime use:
+
+- `.methodologies/clarity/scratch/decision-ledger.md`
+
 Date started: YYYY-MM-DD
-Owner: <name>
+Owner: `<name>`
 
 ## Status definitions
 
@@ -15,13 +19,12 @@ Owner: <name>
 
 | Decision ID | Topic | Status (Locked/Open/Time-boxed open) | Canonical source ID | Rationale | Updated on | Owner | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| DEC-001 | <topic> | <status> | <SRC-###> | <short rationale> | YYYY-MM-DD | <owner> | <notes> |
+| DEC-001 | `<topic>` | `<status>` | `<SRC-###>` | `<short rationale>` | YYYY-MM-DD | `<owner>` | `<notes>` |
 
 ## Changes this pass
 
-- <decision status change, new decision, or removed decision>
+- `<decision status change, new decision, or removed decision>`
 
 ## Open decisions and follow-ups
 
-- <open decision + unblocker needed + target date if known>
-
+- `<open decision + unblocker needed + target date if known>`

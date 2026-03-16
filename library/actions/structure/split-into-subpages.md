@@ -6,16 +6,19 @@ Purpose: Split oversized pages into a hub + drill-down pages so each page has a
 single job and the folder is readable top-down (summary → details).
 
 Inputs:
+
 - Scope (paths/headings) and the target page(s) to split
 - Target hierarchy choice (from `add-hierarchy`)
 - “Must preserve” anchors/links (if any)
 
 Preconditions:
+
 - Split candidate pages are identified and in scope.
 - Canonical hub destination is known before moving sections.
 - Entry points that must remain stable are identified.
 
 Actions:
+
 1) Identify split candidates:
    - pages with multiple unrelated sections
    - pages with 3+ major dimensions mixed (e.g., interfaces + workflow + ops + risks)
@@ -47,21 +50,25 @@ Actions:
    - updated links
 
 Outputs:
+
 - A hub page and a small set of drill-down pages replacing a single oversized doc.
 - Backwards-compatible stubs and updated links where needed.
 - Split map (source page -> destination page/section).
 
 Quality checks:
+
 - Each moved topic has one canonical destination page.
 - Hub page contains valid links to all drill-down pages.
 - No orphaned sections or broken links are introduced.
 - Structural split does not introduce new semantic claims or decisions.
 
 Return-to-intake triggers:
+
 - Split requires scope expansion beyond approved boundaries.
 - Canonical ownership for moved content is unclear.
 - Required compatibility/link updates exceed approved drift budget.
 
 Plan/report logging:
+
 - Plan trace line: `split-into-subpages | trigger | pages split | links updated | checks passed`.
 - Report summary: split structure, compatibility handling, and unresolved ownership items.

@@ -1,61 +1,73 @@
 # Clarity
 
-Clarity is a flexible, progressive technique for enhancing a project wiki (pages,
-structure, labels, definitions, and links) in focused pass runs so teams can use an
-agent to deepen any dimension of the project and make it more concrete and
-reviewable.
+Clarity is a methodology for improving a project wiki through scoped passes
+that make structure, terminology, evidence, and decision surfaces more
+explicit.
 
-It is designed for real project wikis: clear controls up front (scope, presets,
-personas, checks) and repeatable execution details (actions, labels, audit) so
-updates feel guided instead of ad hoc.
+## Start Here
 
-## This Repo
+This file is the source-repo entrypoint for Clarity.
 
-- `methodology/` contains the frozen Clarity core artifacts (CLARITY, WORKFLOW,
-  ARTIFACTS, LIBRARY, LABELS, templates, appendix).
-- `library/` contains the initial Clarity library (overview, presets, actions,
-  personas).
-- `setup/` contains setup instructions for installing Clarity in a target repo.
-- `scripts/` contains a helper to copy methodology + library into `.methodologies/clarity/`.
+It is authoritative for:
 
-## Quickstart (Use in a Target Repo)
+- what this repo contains
+- how to install Clarity into another repo
+- which canonical docs to open next
 
-1. Copy methodology + library into the target repo under `.methodologies/clarity/`:
-   `scripts/copy-clarity.sh /path/to/target-repo [--scope entire-repo|selected-paths] [--scope-path <repo-relative-path> ...]`
-2. Add the Clarity section to the target repo `AGENTS.md`:
-   See `setup/clarity-setup.md`.
-3. Set `.methodologies/clarity/status.md` **Operating scope** (`entire-repo` or
-   `selected-paths`) and **Permissions** (`read and write allowed` /
-   `read-only` / `no access`) for your run boundaries.
-4. Kickstart a pass run by prompting an agent with scope + intent, and tell it to follow `.methodologies/clarity/methodology/WORKFLOW.md`:
+Use these next documents:
 
-The agent should select a preset from
-`.methodologies/clarity/library/overview.md`, then use
-`.methodologies/clarity/library/presets/overview.md` and
-`.methodologies/clarity/library/actions/index.md` as directed there; create/update
-`.methodologies/clarity/scratch/plan.md`, initialize
-`.methodologies/clarity/scratch/canonical-sources.md`,
-`.methodologies/clarity/scratch/decision-ledger.md`, and
-`.methodologies/clarity/scratch/receipts/`, then execute → audit → polish →
-report.
+- `methodology/CLARITY.md`: methodology model, terminology, and document map
+- `methodology/WORKFLOW.md`: runtime contract for a pass
+- `library/overview.md`: runtime entrypoint for preset and action selection
+- `setup/clarity-setup.md`: installation and update procedure
 
-## Method Flow (High Level -> Detail)
+## Repo Layout
 
-1. `methodology/CLARITY.md`: purpose, system model, and control knobs.
-2. `methodology/WORKFLOW.md`: run sequence and compliance gates.
-3. `library/overview.md`: library entrypoint for preset and action discovery.
-4. `library/presets/overview.md`: outcome playbooks.
-5. `library/actions/index.md`: tactical action library.
-6. `methodology/ARTIFACTS.md`: artifact inventory and runtime mappings.
-7. `methodology/LIBRARY.md`: library layer purpose and structure.
-8. `methodology/LABELS.md`: semantic labeling model.
-9. `methodology/appendix/additional-labels.md`: extended label taxonomy.
-10. `methodology/appendix/clarity-dimensions.md`: stable dimension reference.
-11. `methodology/appendix/page-types.md`: stable page-type reference.
+- `methodology/`: core methodology docs, templates, and appendix references
+- `library/`: preset, action, claim, and persona libraries
+- `setup/`: installation instructions for target repos
+- `scripts/`: source-repo helper scripts
 
-## Use in another repo
+## Quickstart
 
-See `setup/clarity-setup.md` for copy/install actions and the AGENTS snippet.
+Source repo:
+
+- run `scripts/copy-clarity.sh /path/to/target-repo [--scope entire-repo|selected-paths] [--scope-path <repo-relative-path> ...]`
+
+Installed runtime:
+
+- set up Clarity under `.methodologies/clarity/`
+- run passes from `.methodologies/clarity/methodology/WORKFLOW.md`
+
+Recommended install flow:
+
+1. From this source repo, copy `methodology/` and `library/` into the target
+   repo under `.methodologies/clarity/`.
+2. Add the Clarity section to the target repo `AGENTS.md` using
+   `setup/clarity-setup.md`.
+3. In the target repo, set `.methodologies/clarity/status.md` operating scope
+   and permissions.
+4. In the target repo, start the pass at
+   `.methodologies/clarity/methodology/WORKFLOW.md`.
+
+## Canonical Reading Order
+
+1. `methodology/CLARITY.md`: methodology entrypoint and conceptual model
+2. `methodology/WORKFLOW.md`: runtime sequence and hard gates
+3. `library/overview.md`: runtime library selection entrypoint
+4. `library/presets/overview.md`: preset catalog and selection model
+5. `library/actions/index.md`: action catalog and action expansion rule
+6. `library/claims/README.md`: claim catalog and claim-family rules
+7. `library/personas/README.md`: persona selection model and persona-family
+   rules
+8. `methodology/ARTIFACTS.md`: runtime artifact inventory
+9. `methodology/LIBRARY.md`: library structure and usage boundaries
+10. `methodology/LABELS.md`: label rules and taxonomy
+
+## Use In Another Repo
+
+Use `setup/clarity-setup.md` for the source-repo install procedure and the
+target-repo `AGENTS.md` snippet.
 
 ## Contributing
 

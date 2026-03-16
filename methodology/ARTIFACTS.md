@@ -1,21 +1,72 @@
 # Clarity Artifacts
 
-This file defines runtime artifacts for Clarity and how each artifact is used
-in installed runs.
+This file is authoritative for the runtime artifact inventory and the mapping
+from source templates to installed runtime artifacts.
 
-## Runtime Templates
+## Start Here
 
-- `templates/plan.md`: template for `.methodologies/clarity/scratch/plan.md`.
-- `templates/report.md`: template for `.methodologies/clarity/scratch/report.md`.
-- `templates/canonical-sources.md`: canonical source register template.
-- `templates/decision-ledger.md`: decision ledger template.
-- `templates/receipt.md`: per-action receipt template.
+Use this file when you need to answer:
 
-## Installed Runtime State
+- which runtime artifacts must exist for a pass
+- which source template initializes each runtime artifact
+- which runtime paths are required versus optional
 
-- `.methodologies/clarity/status.md`: installed status file with source tracking
-  plus operating scope (`entire-repo` or `selected-paths`) and path
-  permissions (`read and write allowed`, `read-only`, `no access`).
-- `.methodologies/clarity/scratch/`: runtime folder in consuming repos that may
-  contain `plan.md`, `report.md`, `canonical-sources.md`,
-  `decision-ledger.md`, and `receipts/`.
+Use these next documents:
+
+- `WORKFLOW.md`: when the artifact is created or updated
+- `templates/`: field layout for each artifact
+
+## Path Context
+
+Source repo:
+
+- `methodology/ARTIFACTS.md`
+- `methodology/templates/`
+
+Installed runtime:
+
+- `.methodologies/clarity/methodology/ARTIFACTS.md`
+- `.methodologies/clarity/scratch/`
+
+## Runtime Artifact Inventory
+
+- `.methodologies/clarity/status.md`: installed status file with source
+  tracking, operating scope, and path permissions
+- `.methodologies/clarity/scratch/plan.md`: required shared plan and run log
+- `.methodologies/clarity/scratch/report.md`: required end-of-run report
+- `.methodologies/clarity/scratch/canonical-sources.md`: required canonical
+  source register
+- `.methodologies/clarity/scratch/decision-ledger.md`: required locked/open
+  decision ledger
+- `.methodologies/clarity/scratch/receipts/`: required folder for per-action
+  receipts
+- `.methodologies/clarity/scratch/evidence/<pass-id>/index.md`: required
+  evidence run index for one pass
+- `.methodologies/clarity/scratch/evidence/<pass-id>/EVIDENCE*.md`: required
+  evidence items for active claims
+- `.methodologies/clarity/scratch/evidence/<pass-id>/assets/`: optional raw
+  artifact folder
+
+## Template To Runtime Mapping
+
+- `templates/plan.md` ->
+  `.methodologies/clarity/scratch/plan.md`
+- `templates/report.md` ->
+  `.methodologies/clarity/scratch/report.md`
+- `templates/canonical-sources.md` ->
+  `.methodologies/clarity/scratch/canonical-sources.md`
+- `templates/decision-ledger.md` ->
+  `.methodologies/clarity/scratch/decision-ledger.md`
+- `templates/receipt.md` ->
+  `.methodologies/clarity/scratch/receipts/<receipt-file>.md`
+- `templates/evidence/index.md` ->
+  `.methodologies/clarity/scratch/evidence/<pass-id>/index.md`
+- `templates/evidence/EVIDENCE.md` ->
+  `.methodologies/clarity/scratch/evidence/<pass-id>/<evidence-file>.md`
+
+## Runtime Notes
+
+- `status.md` defines source tracking, operating scope, and path permissions.
+- `scratch/` is runtime state for the current repo and branch.
+- one active `plan.md` is expected per branch
+- evidence is organized as one run folder per `Pass ID`

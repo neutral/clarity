@@ -1,44 +1,65 @@
 # Clarity Library Overview
 
-Presets map intended outcomes to actions.
+This file is the runtime entrypoint for selecting library resources.
+
+## Start Here
+
+This file is authoritative for:
+
+- routing from intended outcome to the right preset class
+- deciding which library surface to open next
+- handling multi-library selection at a high level
+
+Use these next documents:
+
+- `presets/overview.md`: preset catalog and preset selection model
+- `actions/index.md`: action catalog and action expansion rule
+- `claims/README.md`: claim catalog and claim-family rules
+- `personas/README.md`: persona selection model and persona-family rules
+
+## Path Context
+
+Source repo:
+
+- `library/overview.md`
+
+Installed runtime:
+
+- `.methodologies/clarity/library/overview.md`
 
 ## Agent Navigation
 
 1. Start in this file to map intent to the closest preset class.
-2. Open `presets/overview.md` for preset details (personas, checks,
-   deliverables, and action defaults).
-3. Open `actions/index.md` for tactical action expansion when preset actions are
-   insufficient.
-4. Record selected preset/resources in plan/report artifacts.
-
-Agents should reference local canonical entries during runtime.
+2. Open `presets/overview.md` for preset selection and leaf preset details.
+3. Open `actions/index.md` when preset-defined actions are not enough.
+4. Open `claims/README.md` to load the claim catalog for active trust
+   questions.
+5. Open `personas/README.md` when persona selection or interpretation needs
+   clarification.
+6. Record selected preset, actions, personas, and active claim types in plan,
+   report, and evidence artifacts.
 
 ## Capability Map
 
-Agent heuristic: match the intended outcome to the closest preset in
-`presets/overview.md`.
-
 Use preset classes to narrow selection quickly:
 
-- Foundation (wiki integrity): structure, canonicality, terminology,
-  traceability, and propagation consistency.
-- Product and decision quality: requirements, risk, integration, migration, and
-  policy controls.
-- Scale and operations: onboarding, support, and cross-team handoffs.
+- Foundation: structure, canonicality, terminology, traceability, propagation
+- Product and decision quality: requirements, risk, integration, migration,
+  policy controls
+- Scale and operations: onboarding, support, cross-team handoffs
 
-### Foundation (wiki integrity)
+### Foundation
 
-- Unstructured notes, unclear structure ->
+- Unstructured notes or unclear structure ->
   `Unstructured notes -> structured, enriched wiki slice`
 - Flat folder, hard to navigate -> `Flat folder -> navigable hierarchy`
-- Duplicate/overlapping pages -> `Overlapping pages -> canonical source`
-- Terms mean different things in different places ->
-  `Terminology drift -> consistent language`
-- Claims/decisions lack sources -> `Low traceability -> evidence-backed wiki`
-- A targeted change may be partially propagated across docs ->
+- Duplicate or overlapping pages -> `Overlapping pages -> canonical source`
+- Terms drift across docs -> `Terminology drift -> consistent language`
+- Claims or decisions lack sources -> `Low traceability -> evidence-backed wiki`
+- A targeted update may be partially propagated ->
   `Targeted update -> propagation-consistent wiki`
 
-### Product and decision quality
+### Product And Decision Quality
 
 - Alternatives exist but decisions are implicit ->
   `Design exploration -> decision-ready`
@@ -47,28 +68,28 @@ Use preset classes to narrow selection quickly:
   `Risk-heavy project wiki -> mitigated project wiki`
 - Integration boundaries are unclear ->
   `Integration uncertainty -> interface-dependency explicit wiki`
-- Policy/compliance pressure is high ->
+- Policy or compliance pressure is high ->
   `Compliance pressure -> policy-controlled evidence-backed wiki`
-- Migration planning is risky/ambiguous ->
+- Migration planning is risky or ambiguous ->
   `Migration risk -> cutover-ready migration wiki`
 
-### Scale and operations
+### Scale And Operations
 
-- Onboarding flow is fragmented/hard to follow ->
+- Onboarding flow is fragmented ->
   `Onboarding friction -> self-serve onboarding wiki`
 - Support churn is high -> `Support churn -> triage-to-resolution support wiki`
 - Cross-team transitions are unclear ->
   `Cross-team handoff gaps -> contract-driven handoff wiki`
 
-## Extension Path
+## Custom Composition
 
-If no preset in `presets/overview.md` fits, select actions from
-`actions/index.md` and propose a custom preset (name + personas +
-core/conditional actions + deliverables + checks) for approval before applying
-changes.
+If no preset in `presets/overview.md` fits:
 
-One way to compose a custom preset is to pick a dimension and start from these
-actions:
+1. Select the closest actions from `actions/index.md`.
+2. Propose a custom preset for approval.
+3. Once approved, record the custom preset in the plan before applying changes.
+
+One starting point for custom composition:
 
 - Problem framing: `define-problem-statement`, `capture-user-needs`,
   `define-success-criteria`
@@ -82,14 +103,9 @@ actions:
 
 - `primary`: this Clarity source repo `library/`
 - `additional`: installed-library merges tracked in
-  `.methodologies/clarity/status.md` when used
+  `.methodologies/clarity/status.md`
 
 ## Merge Resolution
 
-Use this section in installed copies when multiple library sources are merged.
-Document duplicate/conflict resolution and resulting canonical local entries.
-
-## Multi-Library Selection Rule
-
-When multiple local entries could satisfy one intent, select one canonical local
-entry and record selection rationale in run artifacts.
+When multiple local entries could satisfy one intent, select one canonical
+local entry and record the selection rationale in run artifacts.
